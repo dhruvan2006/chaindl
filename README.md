@@ -37,6 +37,7 @@ handles the heavy lifting so you can focus on insights.
 - [Glassnode](https://studio.glassnode.com/charts/)
 - [The Block](https://www.theblock.co/data/)
 - [Dune](https://dune.com/)
+- [Looknode] (https://www.looknode.com/)
 
 ## Installation
 To install the `chaindl` package, use pip:

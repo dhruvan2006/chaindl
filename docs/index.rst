@@ -219,6 +219,17 @@ Example:
     url = "https://dune.com/queries/5583538/9204329"
     df = chaindl.download(url)
 
+Looknode (`looknode.com <https://www.looknode.com>`__)
+------------------------------------------------------
+
+Example:
+
+.. code-block:: python
+
+    url = "https://www.looknode.com/charts?chartId=exNetBinance"
+    df = chaindl.download(url)
+
+
 Optional Arguments
 ==================
 
