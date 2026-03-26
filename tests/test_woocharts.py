@@ -45,7 +45,7 @@ def test_download(mocker, mock_response):
 @pytest.mark.parametrize("url, expected_columns", [
     (
         "https://woocharts.com/bitcoin-price-models/",
-        ['market', 'realised', 'delta', 'top_', 'vwap', 'wma200', 'cvdd', 'balanced']
+        ['market', 'realised', 'delta', 'top_', 'vwap', 'wma200', 'cvdd']
     ),
     (
         "https://woocharts.com/bitcoin-congestion/",

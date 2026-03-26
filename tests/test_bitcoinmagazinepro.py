@@ -34,12 +34,12 @@ def test_create_dataframes(mock_data):
 
     expected_df1 = pd.DataFrame({
         'Series1': [1, 2, 3]
-    }, index=pd.to_datetime(['2023-01-01', '2023-01-02', '2023-01-03']))
+    }, index=pd.to_datetime(['2023-01-01', '2023-01-02', '2023-01-03']).astype('datetime64[s]'))
     expected_df1.index.name = 'Date'
 
     expected_df2 = pd.DataFrame({
         'Series2': [4, 5, 6]
-    }, index=pd.to_datetime(['2023-01-01', '2023-01-02', '2023-01-03']))
+    }, index=pd.to_datetime(['2023-01-01', '2023-01-02', '2023-01-03']).astype('datetime64[s]'))
     expected_df2.index.name = 'Date'
 
     pd.testing.assert_frame_equal(dfs[0], expected_df1)
