@@ -1,8 +1,8 @@
 import re
 import json
 import base64
+import struct
 
-import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
 
@@ -36,9 +36,10 @@ def _extract_data_from_scripts(scripts):
                 y_raw = json.loads(y_data)
 
                 if isinstance(y_raw, dict) and "bdata" in y_raw:
-                    # Decode base64 string to binary, then to numpy float64
+                    # Decode base64 string to binary, then to float64 using struct
                     binary_data = base64.b64decode(y_raw["bdata"])
-                    y = np.frombuffer(binary_data, dtype="float64")
+                    count = len(binary_data) // 8  # 8 bytes per float64
+                    y = list(struct.unpack(f"{count}d", binary_data))
                 else:
                     y = y_raw
 

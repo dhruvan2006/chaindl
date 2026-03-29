@@ -1,11 +1,7 @@
 requests
-beautifulsoup4
 pandas
+beautifulsoup4
 selenium
 seleniumbase
-python-dotenv
-pytest
-pytest-mock
-pytest-xdist
-numpy
 curl-cffi
+pytest

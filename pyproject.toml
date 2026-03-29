@@ -25,9 +25,8 @@ dependencies = [
     "requests",
     "pandas",
     "beautifulsoup4",
-    "seleniumbase",
     "selenium",
-    "numpy",
+    "seleniumbase",
     "curl-cffi",
 ]
 
