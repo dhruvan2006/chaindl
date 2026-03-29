@@ -1,82 +1,55 @@
 import re
 import json
-import time
 import pandas as pd
-
-from selenium.webdriver import Remote, ChromeOptions
-from selenium.webdriver.chromium.remote_connection import ChromiumRemoteConnection
-from selenium.webdriver.common.by import By
-
 from seleniumbase import SB
-from selenium.common.exceptions import StaleElementReferenceException
 
 def _download(url, **kwargs):
-    content = _get_script_content(url, **kwargs)
+    content = _get_script_content_seleniumbase(url)
+    if not content:
+        raise ValueError(f"Failed to retrieve any script content from {url}. Likely blocked by CAPTCHA.")
+
     traces = _get_traces(content)
+    if not traces:
+        raise ValueError(f"No data traces found in the page source for {url}.")
 
     dfs = []
     for trace in traces:
         name, x, y = _get_data(trace, content)
+        if name and x and y:
+            df = pd.DataFrame({ name: pd.to_numeric(y, errors='coerce') }, index=pd.to_datetime(x))
+            df.index.name = 'Date'
+            dfs.append(df)
 
-        df = pd.DataFrame({ name: pd.to_numeric(y, errors='coerce') }, index=pd.to_datetime(x))
-        df.index.name = 'Date'
-        dfs.append(df)
+    if not dfs:
+        raise ValueError(f"Found traces but could not parse them into DataFrames for {url}.")
 
-    merged_df = pd.concat(dfs, axis=1, join='outer')
-    return merged_df
-
-def _get_script_content(url, **kwargs):
-    sbr_webdriver = kwargs.get('sbr_webdriver')
-    if sbr_webdriver:
-        return _get_script_content_brightdata(url, sbr_webdriver)
-    else:
-        return _get_script_content_seleniumbase(url)
-
-def _get_script_content_brightdata(url, sbr_webdriver):
-    sbr_connection = ChromiumRemoteConnection(sbr_webdriver, 'goog', 'chrome')
-    with Remote(sbr_connection, options=ChromeOptions()) as driver:
-        driver.get(url)
-
-        # CAPTCHA handling: If you're expecting a CAPTCHA on the target page, use the following code snippet to check the status of Scraping Browser's automatic CAPTCHA solver
-        print('Waiting captcha to solve...')
-        solve_res = driver.execute('executeCdpCommand', {
-            'cmd': 'Captcha.waitForSolve',
-            'params': {'detectTimeout': 20000},
-        })
-        print('Captcha solve status:', solve_res['value']['status'])
-
-        script_content = ""
-        script_tags = driver.find_elements(By.TAG_NAME, 'script')
-        for script_tag in script_tags:
-            script_inner_html = script_tag.get_attribute("innerHTML")
-            if script_inner_html and 'trace' in script_inner_html:
-                script_content += script_inner_html
-    
-    return script_content
+    return pd.concat(dfs, axis=1, join='outer')
 
 def _get_script_content_seleniumbase(url):
-    script_content = ""
-    with SB(uc=True) as sb:
-        sb.uc_open_with_reconnect(url, 4)
+    with SB(uc=True, headless=False) as sb:
+        sb.activate_cdp_mode(url)
         sb.uc_gui_click_captcha()
+        sb.sleep(2)
+        sb.uc_gui_click_captcha()
+        sb.sleep(2)
 
-        attempts = 0
-        while attempts < 3:
+        current_title = sb.get_title()
+        if not current_title or "Human Challenge" in current_title or "Just a moment" in current_title:
+            raise ValueError("CAPTCHA challenge still detected after solving. Access may be blocked.")
+
+        script_content = ""
+        script_tags = sb.find_elements("script")
+        for script_tag in script_tags:
             try:
-                script_tags = sb.find_elements("script")
-                for script_tag in script_tags:
-                    script_inner_html = script_tag.get_attribute("innerHTML")
-                    if script_inner_html and 'trace' in script_inner_html:
-                        script_content += script_inner_html
-                break
-            except StaleElementReferenceException:
-                attempts += 1
-                time.sleep(1)
-
-    return script_content
+                inner = script_tag.get_attribute("innerHTML")
+                if inner and 'trace' in inner:
+                    script_content += inner + "\n"
+            except Exception:
+                continue
+        return script_content
 
 def _get_traces(content):
-    trace_pattern = r'var\s+trace\d+\s*=\s*(\{.*?\});'
+    trace_pattern = r'var\s+trace\d+\s*=\s*(\{.*?\}\s*);'
     traces = re.findall(trace_pattern, content, re.DOTALL)
     return traces
 

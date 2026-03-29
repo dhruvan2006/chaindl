@@ -55,14 +55,13 @@ def test_download_data(monkeypatch):
     expected_df.index.name = 'Date'
 
     import chaindl.scraper.bitbo as bitbo
-    monkeypatch.setattr(bitbo, '_get_script_content', lambda url: content)
+    monkeypatch.setattr(bitbo, '_get_script_content_seleniumbase', lambda url: content)
 
     result_df = _download('test_url')
 
     pd.testing.assert_frame_equal(result_df, expected_df)
 
 
-@pytest.mark.skipif(not sbr_webdriver, reason="Skipping Bitbo integration tests: SBR_WEBDRIVER not provided.")
 @pytest.mark.parametrize("url, expected_columns", [
     (
         "https://charts.bitbo.io/cycle-repeat/",
@@ -75,22 +74,6 @@ def test_download_data(monkeypatch):
 ])
 def test_bitbo_download_sb(url, expected_columns):
     data = _download(url)
-
-    assert isinstance(data, pd.DataFrame)
-    assert isinstance(data.index, pd.DatetimeIndex)
-    assert all(data.dtypes == float)
-
-    assert all(col in data.columns for col in expected_columns)
-
-@pytest.mark.skipif(not sbr_webdriver, reason="Skipping Bitbo integration tests: SBR_WEBDRIVER not provided.")
-@pytest.mark.parametrize("url, expected_columns", [
-    (
-        "https://charts.bitbo.io/cycle-repeat/",
-        ['MA1458d', 'MA200d', 'Price end of day']
-    ),
-])
-def test_bitbo_download_brightdata(url, expected_columns):
-    data = _download(url, sbr_webdriver=sbr_webdriver)
 
     assert isinstance(data, pd.DataFrame)
     assert isinstance(data.index, pd.DatetimeIndex)
