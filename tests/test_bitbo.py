@@ -1,12 +1,6 @@
-import os
 import pytest
 import pandas as pd
-from dotenv import load_dotenv
 from chaindl.scraper.bitbo import _get_traces, _get_data, _download
-
-load_dotenv()
-
-sbr_webdriver = os.getenv("SBR_WEBDRIVER")
 
 content = """
     var axis_x = ["2020-10-20","2020-10-21","2020-10-22"];
@@ -84,8 +78,5 @@ def test_bitbo_download_sb(url, expected_columns):
 
     assert isinstance(data, pd.DataFrame)
     assert isinstance(data.index, pd.DatetimeIndex)
-    import numpy as np
-
-    assert all(np.issubdtype(dtype, float) for dtype in data.dtypes)
-
+    assert all(pd.api.types.is_float_dtype(dtype) for dtype in data.dtypes)
     assert all(col in data.columns for col in expected_columns)

@@ -85,8 +85,5 @@ def test_real_chainexposed_download(url, expected_columns):
 
     assert isinstance(data, pd.DataFrame)
     assert isinstance(data.index, pd.DatetimeIndex)
-    import numpy as np
-
-    assert all(np.issubdtype(dtype, float) for dtype in data.dtypes)
-
+    assert all(pd.api.types.is_float_dtype(dtype) for dtype in data.dtypes)
     assert all(col in data.columns for col in expected_columns)
