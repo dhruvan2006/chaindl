@@ -3,16 +3,20 @@ import pytest
 
 from chaindl.scraper.blockchain import _download
 
-@pytest.mark.parametrize("url, expected_columns", [
-    (
-        "https://www.blockchain.com/explorer/charts/avg-block-size",
-        ['Market Price (USD)', 'Average Block Size']
-    ),
-    (
-        "https://www.blockchain.com/explorer/charts/market-price",
-        ['Market Price (USD)']
-    )
-])
+
+@pytest.mark.parametrize(
+    "url, expected_columns",
+    [
+        (
+            "https://www.blockchain.com/explorer/charts/avg-block-size",
+            ["Market Price (USD)", "Average Block Size"],
+        ),
+        (
+            "https://www.blockchain.com/explorer/charts/market-price",
+            ["Market Price (USD)"],
+        ),
+    ],
+)
 def test_blockchain_download(url, expected_columns):
     data = _download(url)
 
