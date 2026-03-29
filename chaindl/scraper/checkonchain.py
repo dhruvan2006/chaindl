@@ -15,7 +15,7 @@ def _download(url):
 
     dfs = _extract_data_from_scripts(scripts)
 
-    merged_df = pd.concat(dfs, axis=1, join='outer')
+    merged_df = pd.concat(dfs, axis=1, join='outer', sort=True)
     return merged_df
 
 def _extract_data_from_scripts(scripts):

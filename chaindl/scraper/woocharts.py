@@ -16,7 +16,7 @@ def _download(url):
         df.index.name = 'Date'
         dfs.append(df)
     
-    merged_df = pd.concat(dfs, axis=1, join='outer')
+    merged_df = pd.concat(dfs, axis=1, join='outer', sort=True)
     return merged_df
 
 def _request_chart_json(url):
