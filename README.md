@@ -16,10 +16,7 @@ handles the heavy lifting so you can focus on insights.
 
 - **Fetch crypto on-chain data in one line** – no need for API keys or complicated setups.  
 - **Fully free** – all functionality is available without subscription or payment.  
-- **Ready for analysis** – data comes back as a `pandas.DataFrame`, so you can immediately manipulate, visualize, or model it.  
-- **Save and share** – easily export data as CSV for offline use, Excel, or reporting.  
-- **Multiple sources supported** – from Cryptoquant to CheckOnChain, get all your metrics without juggling different platforms.  
-- **Focus on insights, not boilerplate** – `chaindl` handles parsing and formatting, so you spend less time on setup.
+- **Ready for analysis** – data comes back as a `pandas.DataFrame`, so you can immediately manipulate, visualize, or model it.
 
 ## Documentation: [https://chaindl.readthedocs.io/](https://chaindl.readthedocs.io/)
 
@@ -30,7 +27,6 @@ handles the heavy lifting so you can focus on insights.
 - [CheckOnChain](https://charts.checkonchain.com/)
 - [ChainExposed](https://chainexposed.com/)
 - [Woocharts](https://woocharts.com/)
-- [Cryptoquant](https://cryptoquant.com/)
 - [Bitbo Charts](https://charts.bitbo.io/)
 - [Blockchain.com](https://www.blockchain.com/explorer/charts)
 - [Glassnode](https://studio.glassnode.com/charts/)
@@ -59,4 +55,4 @@ data.to_csv('out.csv')
 data.plot()
 ```
 
-For advanced usage and examples with Cryptoquant and other sources, see the [documentation](https://chaindl.readthedocs.io/).
+For advanced usage and examples with other sources, see the [documentation](https://chaindl.readthedocs.io/).
