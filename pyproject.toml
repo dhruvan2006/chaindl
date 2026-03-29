@@ -27,7 +27,6 @@ dependencies = [
     "beautifulsoup4",
     "seleniumbase",
     "selenium",
-    "cloudscraper",
     "numpy",
     "curl-cffi",
 ]
