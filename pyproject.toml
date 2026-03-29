@@ -29,6 +29,7 @@ dependencies = [
     "selenium",
     "cloudscraper",
     "numpy",
+    "curl-cffi",
 ]
 
 [project.urls]

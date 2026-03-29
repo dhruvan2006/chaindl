@@ -1,6 +1,6 @@
 import re
 from urllib.parse import urlparse, parse_qs
-import requests
+from curl_cffi import requests
 import pandas as pd
 
 SESSION = requests.Session()

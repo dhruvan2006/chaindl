@@ -9,3 +9,4 @@ pytest-mock
 pytest-xdist
 cloudscraper
 numpy
+curl-cffi
