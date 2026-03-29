@@ -33,6 +33,7 @@ It supports:
 - `Glassnode <https://studio.glassnode.com/charts/>`__
 - `The Block <https://www.theblock.co/data/>`__
 - `Dune <https://dune.com/>`__
+- `Bitcoin Magazine Pro <https://www.bitcoinmagazinepro.com>`__
 
 ---
 
@@ -178,6 +179,16 @@ Example:
 .. code-block:: python
 
     url = "https://dune.com/queries/5583538/9204329"
+    df = chaindl.download(url)
+
+Bitcoin Magazine Pro (`bitcoinmagazinepro.com <https://www.bitcoinmagazinepro.com>`__)
+--------------------------------------------------------------------------------------
+
+Example:
+
+.. code-block:: python
+
+    url = "https://www.bitcoinmagazinepro.com/charts/puell-multiple/"
     df = chaindl.download(url)
 
 Optional Arguments

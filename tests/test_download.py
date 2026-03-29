@@ -12,6 +12,7 @@ mocked_data = {
     "chainexposed": mocked_data_with_dates,
     "bitbo": mocked_data_with_dates,
     "woocharts": mocked_data_with_dates,
+    "bmpro": mocked_data_with_dates,
 }
 
 
@@ -30,6 +31,11 @@ mocked_data = {
         ),
         ("https://charts.bitbo.io/some_data", mocked_data["bitbo"], "bitbo"),
         ("https://woocharts.com/some_data", mocked_data["woocharts"], "woocharts"),
+        (
+            "https://www.bitcoinmagazinepro.com/some_data",
+            mocked_data["bmpro"],
+            "bmpro",
+        ),
     ],
 )
 def test_download_valid_urls(url, expected_data, provider):
