@@ -13,7 +13,6 @@ mocked_data = {
     "bitbo": mocked_data_with_dates,
     "woocharts": mocked_data_with_dates,
     "cryptoquant": mocked_data_with_dates,
-    "bitcoinmagazinepro": mocked_data_with_dates
 }
 
 @pytest.mark.parametrize("url, expected_data, provider", [
@@ -22,7 +21,6 @@ mocked_data = {
     ("https://charts.bitbo.io/some_data", mocked_data["bitbo"], "bitbo"),
     ("https://woocharts.com/some_data", mocked_data["woocharts"], "woocharts"),
     ("https://cryptoquant.com/some_data", mocked_data["cryptoquant"], "cryptoquant"),
-    ("https://www.bitcoinmagazinepro.com/some_data", mocked_data["bitcoinmagazinepro"], "bitcoinmagazinepro"),
 ])
 def test_download_valid_urls(url, expected_data, provider):
     with patch(f'chaindl.scraper.{provider}._download', return_value=expected_data):

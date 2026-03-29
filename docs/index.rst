@@ -30,7 +30,6 @@ It supports:
 - `Woocharts <https://woocharts.com/>`__
 - `Cryptoquant <https://cryptoquant.com/>`__
 - `Bitbo Charts <https://charts.bitbo.io/index/>`__
-- `Bitcoin Magazine Pro <https://www.bitcoinmagazinepro.com>`__
 - `Blockchain.com <https://www.blockchain.com/explorer/charts/>`__
 - `Glassnode <https://studio.glassnode.com/charts/>`__
 - `The Block <https://www.theblock.co/data/>`__
@@ -156,16 +155,6 @@ Example:
 .. code-block:: python
 
     url = "https://charts.bitbo.io/long-term-power-law/"
-    df = chaindl.download(url)
-
-Bitcoin Magazine Pro (`bitcoinmagazinepro.com <https://www.bitcoinmagazinepro.com>`__)
---------------------------------------------------------------------------------------
-
-Example:
-
-.. code-block:: python
-
-    url = "https://www.bitcoinmagazinepro.com/charts/puell-multiple/"
     df = chaindl.download(url)
 
 Blockchain.com (`blockchain.com <https://www.blockchain.com/explorer/charts/>`__)

@@ -28,7 +28,6 @@ def download(url, start=None, end=None, **kwargs):
         - BitBo: "https://charts.bitbo.io"
         - WooCharts: "https://woocharts.com"
         - CryptoQuant: "https://cryptoquant.com"
-        - Bitcoin Magazine Pro: "https://www.bitcoinmagazinepro.com"
         - Blockchain.com: "https://www.blockchain.com/explorer/charts"
         - Glassnode: "https://studio.glassnode.com/charts"
         - The Block: "https://www.theblock.co"
@@ -44,7 +43,6 @@ def download(url, start=None, end=None, **kwargs):
     BITBO_BASE_URL = "https://charts.bitbo.io"
     WOOCHARTS_BASE_URL = "https://woocharts.com"
     CRYPTOQUANT_BASE_URL = "https://cryptoquant.com"
-    BITCOINMAGAZINEPRO_BASE_URL = "https://www.bitcoinmagazinepro.com"
     BLOCKCHAIN_BASE_URL = "https://www.blockchain.com/explorer/charts"
     GLASSNODE_BASE_URL = "https://studio.glassnode.com/charts"
     THEBLOCK_BASE_URL = "https://www.theblock.co"
@@ -62,8 +60,6 @@ def download(url, start=None, end=None, **kwargs):
         data = scraper.woocharts._download(url)
     elif url.startswith(CRYPTOQUANT_BASE_URL):
         data = scraper.cryptoquant._download(url, **kwargs)
-    elif url.startswith(BITCOINMAGAZINEPRO_BASE_URL):
-        data = scraper.bitcoinmagazinepro._download(url, **kwargs)
     elif url.startswith(BLOCKCHAIN_BASE_URL):
         data = scraper.blockchain._download(url, **kwargs)
     elif url.startswith(GLASSNODE_BASE_URL):
