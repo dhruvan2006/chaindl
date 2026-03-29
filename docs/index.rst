@@ -28,7 +28,6 @@ It supports:
 - `CheckOnChain <https://charts.checkonchain.com/>`__
 - `ChainExposed <https://chainexposed.com/>`__
 - `Woocharts <https://woocharts.com/>`__
-- `Cryptoquant <https://cryptoquant.com/>`__
 - `Bitbo Charts <https://charts.bitbo.io/index/>`__
 - `Blockchain.com <https://www.blockchain.com/explorer/charts/>`__
 - `Glassnode <https://studio.glassnode.com/charts/>`__
@@ -119,33 +118,6 @@ Example:
 
     url = "https://woocharts.com/bitcoin-price-models/"
     df = chaindl.download(url)
-
-Cryptoquant (`cryptoquant.com <https://cryptoquant.com/>`__)
-------------------------------------------------------------
-
-.. note:: Cryptoquant requires your account email and password to access the data.
-
-.. code-block:: python
-
-    import os
-    import chaindl
-
-    # Setup environment variables
-    email = os.getenv('CRYPTOQUANT_EMAIL')
-    password = os.getenv('CRYPTOQUANT_PASSWORD')
-
-    # Download the data
-    data = chaindl.download(
-        "https://cryptoquant.com/analytics/query/66451fd6f3cac64b85386229?v=66451fd6f3cac64b8538622b",
-        email=email,
-        password=password
-    )
-
-To obtain the URL for a specific metric, navigate to the desired chart on Cryptoquant and click the "Share" button.
-Copy the URL from the address bar.
-
-.. image:: ../assets/cryptoquant_step1.png
-.. image:: ../assets/cryptoquant_step2.png
 
 Bitbo Charts (`charts.bitbo.io <https://charts.bitbo.io/index/>`__)
 -------------------------------------------------------------------
