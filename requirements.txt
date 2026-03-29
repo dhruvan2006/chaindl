@@ -10,3 +10,4 @@ pytest
 pytest-mock
 pytest-xdist
 cloudscraper
+numpy

@@ -15,7 +15,7 @@ def test_extract_data_from_scripts():
 
     expected_data = pd.DataFrame({
         "Price": [1, 2, 3]
-    }, index=pd.to_datetime(["2024-09-30", "2024-10-01", "2024-10-02"]))
+    }, index=pd.to_datetime(["2024-09-30", "2024-10-01", "2024-10-02"]).astype('datetime64[s]'))
     expected_data.index.name = 'Date'
 
     dfs = _extract_data_from_scripts(scripts)
@@ -41,7 +41,7 @@ def test_checkonchain_mocked(monkeypatch):
 
     expected_data = pd.DataFrame({
         "Price": [1, 2, 3]
-    }, index=pd.to_datetime(["2024-09-30", "2024-10-01", "2024-10-02"]))
+    }, index=pd.to_datetime(["2024-09-30", "2024-10-01", "2024-10-02"]).astype('datetime64[s]'))
     expected_data.index.name = 'Date'
 
     pd.testing.assert_frame_equal(data, expected_data)

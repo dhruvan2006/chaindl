@@ -18,7 +18,7 @@ def test_extract_data_from_scripts():
 
     expected_data = pd.DataFrame({
         "Price": [912.0, 259.0, 1375.0]
-    }, index=pd.to_datetime(["2012-01-01","2012-01-02","2012-01-03"]))
+    }, index=pd.to_datetime(["2012-01-01","2012-01-02","2012-01-03"]).astype('datetime64[s]'))
     expected_data.index.name = 'Date'
 
     dfs = _extract_data_from_scripts(scripts)
@@ -47,7 +47,7 @@ def test_chainexposed_mocked(monkeypatch):
 
     expected_data = pd.DataFrame({
         "Price": [912.0, 259.0, 1375.0]
-    }, index=pd.to_datetime(["2012-01-01","2012-01-02","2012-01-03"]))
+    }, index=pd.to_datetime(["2012-01-01","2012-01-02","2012-01-03"]).astype('datetime64[s]'))
     expected_data.index.name = 'Date'
 
     pd.testing.assert_frame_equal(data, expected_data)
