@@ -7,6 +7,5 @@ python-dotenv
 pytest
 pytest-mock
 pytest-xdist
-cloudscraper
 numpy
 curl-cffi
