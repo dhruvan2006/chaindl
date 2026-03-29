@@ -2,6 +2,7 @@ import pandas as pd
 
 from . import scraper
 
+
 def download(url, start=None, end=None, **kwargs):
     """
     Downloads cryptocurrency data from the specified URL and returns it as a pandas DataFrame.
@@ -65,8 +66,10 @@ def download(url, start=None, end=None, **kwargs):
     elif url.startswith(DUNE_BASE_URL):
         data = scraper.dune._download(url)
     else:
-        raise ValueError("Unsupported source. Find the list of supported websites here: https://chaindl.readthedocs.io/")
-    
+        raise ValueError(
+            "Unsupported source. Find the list of supported websites here: https://chaindl.readthedocs.io/"
+        )
+
     if pd.api.types.is_datetime64_any_dtype(data.index):
         if start:
             data = data.loc[start:]

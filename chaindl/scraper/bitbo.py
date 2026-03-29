@@ -3,10 +3,13 @@ import json
 import pandas as pd
 from seleniumbase import SB
 
+
 def _download(url, **kwargs):
     content = _get_script_content_seleniumbase(url)
     if not content:
-        raise ValueError(f"Failed to retrieve any script content from {url}. Likely blocked by CAPTCHA.")
+        raise ValueError(
+            f"Failed to retrieve any script content from {url}. Likely blocked by CAPTCHA."
+        )
 
     traces = _get_traces(content)
     if not traces:
@@ -16,14 +19,19 @@ def _download(url, **kwargs):
     for trace in traces:
         name, x, y = _get_data(trace, content)
         if name and x and y:
-            df = pd.DataFrame({ name: pd.to_numeric(y, errors='coerce') }, index=pd.to_datetime(x))
-            df.index.name = 'Date'
+            df = pd.DataFrame(
+                {name: pd.to_numeric(y, errors="coerce")}, index=pd.to_datetime(x)
+            )
+            df.index.name = "Date"
             dfs.append(df)
 
     if not dfs:
-        raise ValueError(f"Found traces but could not parse them into DataFrames for {url}.")
+        raise ValueError(
+            f"Found traces but could not parse them into DataFrames for {url}."
+        )
 
-    return pd.concat(dfs, axis=1, join='outer')
+    return pd.concat(dfs, axis=1, join="outer")
+
 
 def _get_script_content_seleniumbase(url):
     with SB(uc=True, headless=False) as sb:
@@ -34,30 +42,38 @@ def _get_script_content_seleniumbase(url):
         sb.sleep(2)
 
         current_title = sb.get_title()
-        if not current_title or "Human Challenge" in current_title or "Just a moment" in current_title:
-            raise ValueError("CAPTCHA challenge still detected after solving. Access may be blocked.")
+        if (
+            not current_title
+            or "Human Challenge" in current_title
+            or "Just a moment" in current_title
+        ):
+            raise ValueError(
+                "CAPTCHA challenge still detected after solving. Access may be blocked."
+            )
 
         script_content = ""
         script_tags = sb.find_elements("script")
         for script_tag in script_tags:
             try:
                 inner = script_tag.get_attribute("innerHTML")
-                if inner and 'trace' in inner:
+                if inner and "trace" in inner:
                     script_content += inner + "\n"
             except Exception:
                 continue
         return script_content
 
+
 def _get_traces(content):
-    trace_pattern = r'var\s+trace\d+\s*=\s*(\{.*?\}\s*);'
+    trace_pattern = r"var\s+trace\d+\s*=\s*(\{.*?\}\s*);"
     traces = re.findall(trace_pattern, content, re.DOTALL)
     return traces
 
+
 def _get_data(trace, content):
-    x_pattern = r'x:\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*,'
-    y_pattern = r'y:\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*,'
+    x_pattern = r"x:\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*,"
+    y_pattern = r"y:\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*,"
     name_pattern = r"name:\s*'([^']*)'"
-    var_pattern = r'var\s+({name})\s*=\s*([^;]*);'
+    var_pattern = r"var\s+({name})\s*=\s*([^;]*);"
 
     name = ""
     x, y = [], []
@@ -86,5 +102,5 @@ def _get_data(trace, content):
             name_match = re.search(name_pattern, trace)
             if name_match:
                 name = name_match.group(1)
-    
+
     return name, x, y

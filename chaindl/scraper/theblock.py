@@ -3,6 +3,7 @@ import requests
 import pandas as pd
 from urllib.parse import urlparse
 
+
 def _download(url):
     parsed = urlparse(url)
     parts = [p for p in parsed.path.split("/") if p]
@@ -20,7 +21,7 @@ def _download(url):
             series: pd.DataFrame(data["Data"]).set_index("Timestamp")["Result"]
             for series, data in jsonFile["Series"].items()
         },
-        axis=1
+        axis=1,
     )
     df.index = pd.to_datetime(df.index, unit="s")
     df.index.name = "Date"

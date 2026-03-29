@@ -2,6 +2,7 @@ import pytest
 import pandas as pd
 from chaindl.scraper.dune import _download
 
+
 def test_download_dune():
     url = "https://dune.com/queries/3265994/5466888"
     df = _download(url)
@@ -10,6 +11,7 @@ def test_download_dune():
     assert "date" in df.columns
     assert "BTC_Price" in df.columns
     assert "mv_ratio" in df.columns
+
 
 def test_download_dashboard():
     url = "https://dune.com/cryptokoryo/crypto-buy-signal"
