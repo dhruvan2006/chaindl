@@ -46,6 +46,7 @@ def download(url, start=None, end=None, **kwargs):
     GLASSNODE_BASE_URL = "https://studio.glassnode.com/charts"
     THEBLOCK_BASE_URL = "https://www.theblock.co"
     DUNE_BASE_URL = "https://dune.com"
+    BMPRO_BASE_URL = "https://www.bitcoinmagazinepro.com"
 
     data = pd.DataFrame()
 
@@ -65,6 +66,8 @@ def download(url, start=None, end=None, **kwargs):
         data = scraper.theblock._download(url)
     elif url.startswith(DUNE_BASE_URL):
         data = scraper.dune._download(url)
+    elif url.startswith(BMPRO_BASE_URL):
+        data = scraper.bmpro._download(url)
     else:
         raise ValueError(
             "Unsupported source. Find the list of supported websites here: https://chaindl.readthedocs.io/"

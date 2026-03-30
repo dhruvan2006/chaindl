@@ -6,6 +6,7 @@ from .blockchain import _download as blockchain_download
 from .glassnode import _download as glassnode_download
 from .theblock import _download as theblock_download
 from .dune import _download as dune_download
+from .bmpro import _download as bmpro_download
 
 __all__ = [
     "checkonchain_download",
@@ -16,4 +17,5 @@ __all__ = [
     "glassnode_download",
     "theblock_download",
     "dune_download",
+    "bmpro_download",
 ]
