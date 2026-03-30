@@ -5,7 +5,7 @@ from chaindl.scraper.dune import _download
 
 def test_download_dune():
     url = "https://dune.com/queries/3265994/5466888"
-    df = _download(url)
+    df = _download(url, xvfb=None)
     assert isinstance(df, pd.DataFrame)
     assert not df.empty
     assert "date" in df.columns
@@ -16,4 +16,4 @@ def test_download_dune():
 def test_download_dashboard():
     url = "https://dune.com/cryptokoryo/crypto-buy-signal"
     with pytest.raises(ValueError, match="URL is not a valid Dune query URL"):
-        _download(url)
+        _download(url, xvfb=None)

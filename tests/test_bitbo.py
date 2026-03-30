@@ -56,9 +56,11 @@ def test_download_data(monkeypatch):
 
     import chaindl.scraper.bitbo as bitbo
 
-    monkeypatch.setattr(bitbo, "_get_script_content_seleniumbase", lambda url: content)
+    monkeypatch.setattr(
+        bitbo, "_get_script_content_seleniumbase", lambda url, xvfb: content
+    )
 
-    result_df = _download("test_url")
+    result_df = _download("test_url", xvfb=None)
 
     pd.testing.assert_frame_equal(result_df, expected_df)
 
@@ -74,7 +76,7 @@ def test_download_data(monkeypatch):
     ],
 )
 def test_bitbo_download_sb(url, expected_columns):
-    data = _download(url)
+    data = _download(url, xvfb=None)
 
     assert isinstance(data, pd.DataFrame)
     assert isinstance(data.index, pd.DatetimeIndex)

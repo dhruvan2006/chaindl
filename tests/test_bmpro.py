@@ -32,7 +32,7 @@ def test_create_dataframes():
     ],
 )
 def test_bitbo_download(url, expected_columns):
-    data = _download(url)
+    data = _download(url, xvfb=None)
 
     assert isinstance(data, pd.DataFrame)
     assert isinstance(data.index, pd.DatetimeIndex)
