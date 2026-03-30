@@ -57,7 +57,7 @@ def test_download_data(monkeypatch):
     import chaindl.scraper.bitbo as bitbo
 
     monkeypatch.setattr(
-        bitbo, "_get_script_content_seleniumbase", lambda url, xvfb: content
+        bitbo, "_get_script_content_seleniumbase", lambda url, proxy, xvfb: content
     )
 
     result_df = _download("test_url", xvfb=None)
