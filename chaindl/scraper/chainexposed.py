@@ -7,8 +7,8 @@ from bs4 import BeautifulSoup
 from . import utils
 
 
-def _download(url):
-    content = utils._get_page_content(url)
+def _download(url, proxy=None):
+    content = utils._get_page_content(url, proxy)
     soup = BeautifulSoup(content, "html.parser")
     scripts = soup.find_all("script")
 
