@@ -4,7 +4,7 @@ from seleniumbase import SB
 from urllib.parse import urlparse
 
 
-def _download(url: str, proxy=None, xvfb=None) -> pd.DataFrame:
+def _download(url: str, xvfb=None) -> pd.DataFrame:
     # Parse the query ID from URL
     parsed = urlparse(url)
     parts = [part for part in parsed.path.split("/") if part]
@@ -15,9 +15,7 @@ def _download(url: str, proxy=None, xvfb=None) -> pd.DataFrame:
 
     target_url_fragment = "core-api.dune.com/public/execution"
 
-    with SB(
-        undetectable=True, headless=False, uc_cdp_events=True, proxy=proxy, xvfb=xvfb
-    ) as sb:
+    with SB(undetectable=True, headless=False, uc_cdp_events=True, xvfb=xvfb) as sb:
         events = []
 
         sb.uc_open_with_reconnect(url, 2)

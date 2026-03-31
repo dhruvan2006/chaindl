@@ -26,9 +26,9 @@ def _parse_metric_path(url: str):
     return new_path, asset, snake_case
 
 
-def _fetch_json(url: str, proxy=None):
+def _fetch_json(url: str):
     """Fetch JSON from a URL with session handling and error checking."""
-    resp = SESSION.get(url, proxy=proxy)
+    resp = SESSION.get(url)
     resp.raise_for_status()
     try:
         return resp.json()
@@ -57,16 +57,16 @@ def _process_metric_json(json_data, column_name: str):
         return df
 
 
-def _download(url: str, proxy=None, include_price: bool = True) -> pd.DataFrame:
+def _download(url: str, include_price: bool = True) -> pd.DataFrame:
     try:
         metric_path, asset, snake_case = _parse_metric_path(url)
 
         # Fetch cookies
-        SESSION.get(url, proxy=proxy) if proxy else SESSION.get(url)
+        SESSION.get(url)
 
         # Fetch metric
         api_url = f"https://api.glassnode.com/v1/metrics/{metric_path}?a={asset}&referrer=charts"
-        json_data = _fetch_json(api_url, proxy=proxy)
+        json_data = _fetch_json(api_url)
 
         if "requiredPlan" in json_data:
             raise ValueError(f"Metric {snake_case} is not available on the free plan.")
@@ -76,7 +76,7 @@ def _download(url: str, proxy=None, include_price: bool = True) -> pd.DataFrame:
         # Optionally fetch USD price
         if include_price:
             price_api = f"https://api.glassnode.com/v1/metrics/market/price_usd_close?a={asset}&referrer=charts"
-            json_price = _fetch_json(price_api, proxy=proxy)
+            json_price = _fetch_json(price_api)
             df_price = pd.DataFrame(json_price)
             df_price.rename(columns={"t": "Date", "v": "price_usd_close"}, inplace=True)
             df_price.index = pd.to_datetime(df_price["Date"], unit="s")
