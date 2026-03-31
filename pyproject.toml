@@ -8,7 +8,7 @@ exclude = ["assets*"]
 
 [project]
 name = "chaindl"
-version = "0.2.2"
+version = "0.2.3"
 authors = [
   { name="Dhruvan Gnanadhandayuthapani", email="dhruvan2006@gmail.com" },
 ]
