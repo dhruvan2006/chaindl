@@ -34,7 +34,7 @@ def test_extract_data_from_scripts():
 
 
 def test_checkonchain_mocked(monkeypatch):
-    def mock_get_page_content(url, proxy):
+    def mock_get_page_content(url):
         return """
         <script>
         Plotly.newPlot("plot", [{

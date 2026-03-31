@@ -3,9 +3,9 @@ import pandas as pd
 from seleniumbase import SB
 
 
-def _download(url, proxy=None, xvfb=None):
+def _download(url, xvfb=None):
     """Main entry point to fetch and process data."""
-    data = _intercept_network_requests(url, proxy, xvfb)
+    data = _intercept_network_requests(url, xvfb)
     # Extract the plotly figure data from the Dash response
     traces = data["response"]["chart"]["figure"]["data"]
     dfs = _create_dataframes(traces)
@@ -36,11 +36,11 @@ def _create_dataframes(traces):
     return dfs
 
 
-def _intercept_network_requests(url, proxy, xvfb, timeout=10):
+def _intercept_network_requests(url, xvfb, timeout=10):
     """Uses SeleniumBase CDP to capture Dash network responses."""
     target_url_fragment = "_dash-update-component"
 
-    with SB(headless=True, uc_cdp_events=True, proxy=proxy, xvfb=xvfb) as sb:
+    with SB(headless=True, uc_cdp_events=True, xvfb=xvfb) as sb:
         events = []
 
         sb.uc_open_with_reconnect(url, 1)

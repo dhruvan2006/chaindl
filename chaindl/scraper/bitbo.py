@@ -4,8 +4,8 @@ import pandas as pd
 from seleniumbase import SB
 
 
-def _download(url, proxy=None, xvfb=None):
-    content = _get_script_content_seleniumbase(url, proxy, xvfb)
+def _download(url, xvfb=None):
+    content = _get_script_content_seleniumbase(url, xvfb)
     if not content:
         raise ValueError(
             f"Failed to retrieve any script content from {url}. Likely blocked by CAPTCHA."
@@ -33,8 +33,8 @@ def _download(url, proxy=None, xvfb=None):
     return pd.concat(dfs, axis=1, join="outer")
 
 
-def _get_script_content_seleniumbase(url, proxy, xvfb):
-    with SB(uc=True, headless=False, proxy=proxy, xvfb=xvfb) as sb:
+def _get_script_content_seleniumbase(url, xvfb):
+    with SB(uc=True, headless=False, xvfb=xvfb) as sb:
         sb.activate_cdp_mode(url)
         sb.uc_gui_click_captcha()
         sb.sleep(2)
